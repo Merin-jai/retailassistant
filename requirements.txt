@@ -1,0 +1,7 @@
+# requirements.txt
+pandas
+prophet
+streamlit
+openai
+ortools
+scikit-learn
