@@ -1,17 +1,20 @@
 import pandas as pd
 from agents.inventory_advisor_agent import InventoryAdvisorAgent
 
-# Load mock forecast
-df = pd.read_csv('data/sample_forecast.csv')
+# Load mock data
+forecast_df = pd.read_csv('data/sample_forecast.csv')
+historical_df = pd.read_csv('data/historical_sales.csv')
 
 # Create agent
-agent = InventoryAdvisorAgent(df)
+agent = InventoryAdvisorAgent(
+    forecast_df=forecast_df,
+    historical_df=historical_df,
+    sku_id='SKU001',
+    lead_time_days=7,
+    ordering_cost=100,
+    holding_cost_per_unit_per_year=2.0,
+    z_score=1.65
+)
 
-# Calculate
-avg_demand = agent.calculate_average_daily_demand()
-safety_stock = agent.calculate_safety_stock()
-reorder_point = agent.calculate_reorder_point()
-
-print(f"Average Daily Demand: {avg_demand}")
-print(f"Safety Stock: {safety_stock}")
-print(f"Reorder Point: {reorder_point}")
+result = agent.generate_report()
+print(result)
